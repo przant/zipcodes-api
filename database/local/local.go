@@ -5,7 +5,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/przant/zicodes-api/models"
+	"github.com/przant/zipcodes-api/models"
 )
 
 const (
