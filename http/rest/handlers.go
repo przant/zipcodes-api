@@ -8,7 +8,7 @@ import (
 )
 
 func GetByZipcode(c echo.Context) error {
-	zc := c.QueryParam("zipcode")
+	zc := c.Param("zipcode")
 	db := repo.GetZipcodesService()
 	record, err := db.FetchByZipcode(zc)
 	if err != nil {
@@ -19,7 +19,7 @@ func GetByZipcode(c echo.Context) error {
 }
 
 func GetByCounty(c echo.Context) error {
-	co := c.QueryParam("county")
+	co := c.Param("county")
 	db := repo.GetZipcodesService()
 	records, err := db.FetchByCounty(co)
 	if err != nil {
@@ -30,8 +30,8 @@ func GetByCounty(c echo.Context) error {
 }
 
 func GetByStateCounty(c echo.Context) error {
-	st := c.QueryParam("state")
-	co := c.QueryParam("county")
+	st := c.Param("state")
+	co := c.Param("county")
 	db := repo.GetZipcodesService()
 	records, err := db.FetchByStateCounty(st, co)
 	if err != nil {
@@ -42,8 +42,8 @@ func GetByStateCounty(c echo.Context) error {
 }
 
 func GetByStateCity(c echo.Context) error {
-	st := c.QueryParam("state")
-	city := c.QueryParam("city")
+	st := c.Param("state")
+	city := c.Param("city")
 	db := repo.GetZipcodesService()
 	records, err := db.FetchByStateCity(st, city)
 	if err != nil {
@@ -54,8 +54,8 @@ func GetByStateCity(c echo.Context) error {
 }
 
 func GetByCountyCity(c echo.Context) error {
-	co := c.QueryParam("county")
-	city := c.QueryParam("city")
+	co := c.Param("county")
+	city := c.Param("city")
 	db := repo.GetZipcodesService()
 	records, err := db.FetchByCountyCity(co, city)
 	if err != nil {
