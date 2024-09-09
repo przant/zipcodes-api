@@ -1,5 +1,5 @@
 services:
-  db:
+  mysql-db:
     build:
       dockerfile: Dockerfile.mysql
     env_file:
@@ -8,4 +8,17 @@ services:
       - 3306
     ports:
       - 3306:3306
+    restart: always
+
+  server:
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      mysql-db:
+        condition: service_started
+        required: true
+    expose:
+      - 20790
+    ports:
+        - 8080:20790
     restart: always
