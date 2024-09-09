@@ -69,13 +69,24 @@ func (ldb *LocalDB) InitLocalStorage() error {
 
 func (ldb *LocalDB) createStateTable(records []models.Zipcode) error {
 	for _, r := range records[1:] {
-		ldb.StateTable[r.State] = map[string]map[string]string{
-			r.Zipcode: {
-				"StateFIPS":  r.StateFIPS,
-				"StateAbbr":  r.StateAbbr,
-				"CountyName": r.State,
-				"CityName":   r.City,
-			},
+		if _, exist := ldb.StateTable[r.State]; !exist {
+			ldb.StateTable[r.State] = map[string]map[string]string{
+				r.Zipcode: {
+					"StateFIPS":  r.StateFIPS,
+					"StateAbbr":  r.StateAbbr,
+					"CountyName": r.State,
+					"CityName":   r.City,
+				},
+			}
+		} else {
+			ldb.StateTable[r.State] = map[string]map[string]string{
+				r.Zipcode: {
+					"StateFIPS":  r.StateFIPS,
+					"StateAbbr":  r.StateAbbr,
+					"CountyName": r.State,
+					"CityName":   r.City,
+				},
+			}
 		}
 	}
 
