@@ -20,11 +20,11 @@ func main() {
 
 	api := rest.NewAPI()
 
-	api.GET("/zipcode", rest.GetByZipcode)
-	api.GET("/county", rest.GetByCounty)
-	api.GET("/state-county", rest.GetByStateCounty)
-	api.GET("/state-city", rest.GetByStateCity)
-	api.GET("/county-city", rest.GetByCountyCity)
+	api.GET("/zipcodes/:zipcode", rest.GetByZipcode)
+	api.GET("/counties/:county", rest.GetByCounty)
+	api.GET("/counties/:county/cities/:city", rest.GetByCountyCity)
+	api.GET("/states/:state/counties/:county", rest.GetByStateCounty)
+	api.GET("/states/:state/cities/:city:", rest.GetByStateCity)
 
 	api.Logger.Fatal(api.Start(rest.PORT))
 }
