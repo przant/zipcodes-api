@@ -1,0 +1,11 @@
+services:
+  db:
+    build:
+      dockerfile: Dockerfile.mysql
+    env_file:
+      - mysql.env
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    restart: always
