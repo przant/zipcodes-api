@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	PORT = "20790"
+	PORT = ":20790"
 )
 
 func NewAPI() (api *echo.Echo) {
