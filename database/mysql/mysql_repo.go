@@ -23,7 +23,7 @@ func NewMySQLRepo() (*MySQLRepo, error) {
 		User:   os.Getenv("MYSQL_USER"),
 		Passwd: os.Getenv("MYSQL_PASSWORD"),
 		Net:    "tcp",
-		Addr:   "127.0.0.1:3306",
+		Addr:   "mysql-db:3306",
 		DBName: "us_zipcodes",
 	}
 
