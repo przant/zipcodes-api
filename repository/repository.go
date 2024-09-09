@@ -7,7 +7,7 @@ type ZipcodesRepo interface {
 	FetchByCounty(county string) ([]models.Zipcode, error)
 	FetchByStateCounty(state, county string) ([]models.Zipcode, error)
 	FetchByStateCity(state, city string) ([]models.Zipcode, error)
-	FecthByCountyCity(county, city string) ([]models.Zipcode, error)
+	FetchByCountyCity(county, city string) ([]models.Zipcode, error)
 }
 
 type ZipcodesService struct {
@@ -66,7 +66,7 @@ func (zs *ZipcodesService) FetchByStateCity(state, city string) ([]models.Zipcod
 	return zcs, nil
 }
 
-func (zs *ZipcodesService) FecthByCountyCity(county, city string) ([]models.Zipcode, error) {
+func (zs *ZipcodesService) FetchByCountyCity(county, city string) ([]models.Zipcode, error) {
 	zcs, err := zs.repo.FetchByStateCity(county, city)
 	if err != nil {
 		return nil, err
