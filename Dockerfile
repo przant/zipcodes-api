@@ -14,6 +14,10 @@ FROM alpine:3.20
 
 EXPOSE 20790
 
-COPY --from=builder /api/zipcodes ./usr/bin
+RUN pwd && ls
 
-CMD [ "zipcodes" ]
+COPY --from=builder /api/mysql.env /api/zipcodes ./
+
+RUN pwd && ls
+
+CMD [ "./zipcodes" ]
