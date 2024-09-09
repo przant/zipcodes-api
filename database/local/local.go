@@ -14,6 +14,7 @@ const (
 
 type LocalDB struct {
 	ZipcodesTable    map[string]map[string]string
+	StateTable       map[string]map[string]map[string]string
 	CountyTable      map[string]map[string]map[string]string
 	StateCountyTable map[string]map[string]map[string]map[string]string
 	StateCityTable   map[string]map[string]map[string]map[string]string
@@ -55,6 +56,7 @@ func getInitialData() ([]models.Zipcode, error) {
 
 func (ldb *LocalDB) Close() error {
 	clear(ldb.ZipcodesTable)
+	clear(ldb.StateTable)
 	clear(ldb.CountyTable)
 	clear(ldb.StateCountyTable)
 	clear(ldb.StateCityTable)
@@ -69,6 +71,10 @@ func (ldb *LocalDB) InitLocalStorage() error {
 	}
 
 	if err := ldb.createZipcodeTable(records); err != nil {
+		return err
+	}
+
+	if err := ldb.createStateTable(records); err != nil {
 		return err
 	}
 
@@ -99,6 +105,21 @@ func (ldb *LocalDB) createZipcodeTable(records []models.Zipcode) error {
 			"StateName":  r.State,
 			"CountyName": r.County,
 			"CityName":   r.City,
+		}
+	}
+
+	return nil
+}
+
+func (ldb *LocalDB) createStateTable(records []models.Zipcode) error {
+	for _, r := range records[1:] {
+		ldb.StateTable[r.State] = map[string]map[string]string{
+			r.Zipcode: {
+				"StateFIPS":  r.StateFIPS,
+				"StateAbbr":  r.StateAbbr,
+				"CountyName": r.State,
+				"CityName":   r.City,
+			},
 		}
 	}
 
