@@ -74,18 +74,16 @@ func (ldb *LocalDB) createStateTable(records []models.Zipcode) error {
 				r.Zipcode: {
 					"StateFIPS":  r.StateFIPS,
 					"StateAbbr":  r.StateAbbr,
-					"CountyName": r.State,
+					"CountyName": r.County,
 					"CityName":   r.City,
 				},
 			}
 		} else {
-			ldb.StateTable[r.State] = map[string]map[string]string{
-				r.Zipcode: {
-					"StateFIPS":  r.StateFIPS,
-					"StateAbbr":  r.StateAbbr,
-					"CountyName": r.State,
-					"CityName":   r.City,
-				},
+			ldb.StateTable[r.State][r.Zipcode] = map[string]string{
+				"StateFIPS":  r.StateFIPS,
+				"StateAbbr":  r.StateAbbr,
+				"CountyName": r.County,
+				"CityName":   r.City,
 			}
 		}
 	}
