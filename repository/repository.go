@@ -67,7 +67,7 @@ func (zs *ZipcodesService) FetchByStateCity(state, city string) ([]models.Zipcod
 }
 
 func (zs *ZipcodesService) FetchByCountyCity(county, city string) ([]models.Zipcode, error) {
-	zcs, err := zs.repo.FetchByStateCity(county, city)
+	zcs, err := zs.repo.FetchByCountyCity(county, city)
 	if err != nil {
 		return nil, err
 	}
