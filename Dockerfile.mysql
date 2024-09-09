@@ -1,0 +1,5 @@
+FROM mysql
+
+ENV MYSQL_DATABASE=us_zipcodes
+
+COPY ./database/mysql/script.sql /docker-entrypoint-initdb.d
