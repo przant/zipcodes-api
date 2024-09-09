@@ -53,47 +53,47 @@ func getInitialData() ([]models.Zipcode, error) {
 	return records, nil
 }
 
-func (ls *LocalDB) Close() error {
-	clear(ls.ZipcodesTable)
-	clear(ls.CountyTable)
-	clear(ls.StateCountyTable)
-	clear(ls.StateCityTable)
-	clear(ls.CountyCityTable)
+func (ldb *LocalDB) Close() error {
+	clear(ldb.ZipcodesTable)
+	clear(ldb.CountyTable)
+	clear(ldb.StateCountyTable)
+	clear(ldb.StateCityTable)
+	clear(ldb.CountyCityTable)
 	return nil
 }
 
-func (ls *LocalDB) InitLocalStorage() error {
+func (ldb *LocalDB) InitLocalStorage() error {
 	records, err := getInitialData()
 	if err != nil {
 		return err
 	}
 
-	if err := ls.createZipcodeTable(records); err != nil {
+	if err := ldb.createZipcodeTable(records); err != nil {
 		return err
 	}
 
-	if err := ls.createCountyTable(records); err != nil {
+	if err := ldb.createCountyTable(records); err != nil {
 		return err
 	}
 
-	if err := ls.createStateCountyTable(records); err != nil {
+	if err := ldb.createStateCountyTable(records); err != nil {
 		return err
 	}
 
-	if err := ls.createStateCityTable(records); err != nil {
+	if err := ldb.createStateCityTable(records); err != nil {
 		return err
 	}
 
-	if err := ls.createCountyCityTable(records); err != nil {
+	if err := ldb.createCountyCityTable(records); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (ls *LocalDB) createZipcodeTable(records []models.Zipcode) error {
+func (ldb *LocalDB) createZipcodeTable(records []models.Zipcode) error {
 	for _, r := range records[1:] {
-		ls.ZipcodesTable[r.Zipcode] = map[string]string{
+		ldb.ZipcodesTable[r.Zipcode] = map[string]string{
 			"StateFIPS":  r.StateFIPS,
 			"StateAbbr":  r.StateAbbr,
 			"StateName":  r.State,
@@ -105,10 +105,10 @@ func (ls *LocalDB) createZipcodeTable(records []models.Zipcode) error {
 	return nil
 }
 
-func (ls *LocalDB) createCountyTable(records []models.Zipcode) error {
+func (ldb *LocalDB) createCountyTable(records []models.Zipcode) error {
 	for _, r := range records[1:] {
-		if _, exist := ls.CountyTable[r.County]; !exist {
-			ls.CountyTable[r.County] = map[string]map[string]string{
+		if _, exist := ldb.CountyTable[r.County]; !exist {
+			ldb.CountyTable[r.County] = map[string]map[string]string{
 				r.Zipcode: {
 					"StateFIPS": r.StateFIPS,
 					"StateAbbr": r.StateAbbr,
@@ -117,7 +117,7 @@ func (ls *LocalDB) createCountyTable(records []models.Zipcode) error {
 				},
 			}
 		} else {
-			ls.CountyTable[r.County][r.Zipcode] = map[string]string{
+			ldb.CountyTable[r.County][r.Zipcode] = map[string]string{
 				"StateFIPS": r.StateFIPS,
 				"StateAbbr": r.StateAbbr,
 				"StateName": r.State,
@@ -128,10 +128,10 @@ func (ls *LocalDB) createCountyTable(records []models.Zipcode) error {
 	return nil
 }
 
-func (ls *LocalDB) createStateCountyTable(records []models.Zipcode) error {
+func (ldb *LocalDB) createStateCountyTable(records []models.Zipcode) error {
 	for _, r := range records[1:] {
-		if _, exist := ls.StateCountyTable[r.State]; !exist {
-			ls.StateCountyTable[r.State] = map[string]map[string]map[string]string{
+		if _, exist := ldb.StateCountyTable[r.State]; !exist {
+			ldb.StateCountyTable[r.State] = map[string]map[string]map[string]string{
 				r.County: {
 					r.Zipcode: {
 						"StateFIPS": r.StateFIPS,
@@ -143,8 +143,8 @@ func (ls *LocalDB) createStateCountyTable(records []models.Zipcode) error {
 			continue
 		}
 
-		if _, exist := ls.StateCountyTable[r.State][r.County]; !exist {
-			ls.StateCountyTable[r.State][r.County] = map[string]map[string]string{
+		if _, exist := ldb.StateCountyTable[r.State][r.County]; !exist {
+			ldb.StateCountyTable[r.State][r.County] = map[string]map[string]string{
 				r.Zipcode: {
 					"StateFIPS": r.StateFIPS,
 					"StateAbbr": r.StateAbbr,
@@ -154,7 +154,7 @@ func (ls *LocalDB) createStateCountyTable(records []models.Zipcode) error {
 			continue
 		}
 
-		ls.StateCountyTable[r.State][r.County][r.Zipcode] = map[string]string{
+		ldb.StateCountyTable[r.State][r.County][r.Zipcode] = map[string]string{
 			"StateFIPS": r.StateFIPS,
 			"StateAbbr": r.StateAbbr,
 			"CityName":  r.City,
@@ -164,10 +164,10 @@ func (ls *LocalDB) createStateCountyTable(records []models.Zipcode) error {
 	return nil
 }
 
-func (ls *LocalDB) createStateCityTable(records []models.Zipcode) error {
+func (ldb *LocalDB) createStateCityTable(records []models.Zipcode) error {
 	for _, r := range records[1:] {
-		if _, exist := ls.StateCityTable[r.State]; !exist {
-			ls.StateCountyTable[r.State] = map[string]map[string]map[string]string{
+		if _, exist := ldb.StateCityTable[r.State]; !exist {
+			ldb.StateCountyTable[r.State] = map[string]map[string]map[string]string{
 				r.City: {
 					r.Zipcode: {
 						"StateFIPS":  r.StateFIPS,
@@ -179,8 +179,8 @@ func (ls *LocalDB) createStateCityTable(records []models.Zipcode) error {
 			continue
 		}
 
-		if _, exist := ls.StateCityTable[r.State][r.City]; !exist {
-			ls.StateCityTable[r.State][r.City] = map[string]map[string]string{
+		if _, exist := ldb.StateCityTable[r.State][r.City]; !exist {
+			ldb.StateCityTable[r.State][r.City] = map[string]map[string]string{
 				r.Zipcode: {
 					"StateFIPS":  r.StateFIPS,
 					"StateAbbr":  r.StateAbbr,
@@ -190,7 +190,7 @@ func (ls *LocalDB) createStateCityTable(records []models.Zipcode) error {
 			continue
 		}
 
-		ls.StateCityTable[r.State][r.City][r.Zipcode] = map[string]string{
+		ldb.StateCityTable[r.State][r.City][r.Zipcode] = map[string]string{
 			"StateFIPS":  r.StateFIPS,
 			"StateAbbr":  r.StateAbbr,
 			"CountyName": r.County,
@@ -200,10 +200,10 @@ func (ls *LocalDB) createStateCityTable(records []models.Zipcode) error {
 	return nil
 }
 
-func (ls *LocalDB) createCountyCityTable(records []models.Zipcode) error {
+func (ldb *LocalDB) createCountyCityTable(records []models.Zipcode) error {
 	for _, r := range records[1:] {
-		if _, exist := ls.CountyCityTable[r.County]; !exist {
-			ls.CountyCityTable[r.County] = map[string]map[string]map[string]string{
+		if _, exist := ldb.CountyCityTable[r.County]; !exist {
+			ldb.CountyCityTable[r.County] = map[string]map[string]map[string]string{
 				r.City: {
 					r.Zipcode: {
 						"StateFIPS": r.StateFIPS,
@@ -215,8 +215,8 @@ func (ls *LocalDB) createCountyCityTable(records []models.Zipcode) error {
 			continue
 		}
 
-		if _, exist := ls.CountyCityTable[r.County][r.City]; !exist {
-			ls.CountyCityTable[r.County][r.City] = map[string]map[string]string{
+		if _, exist := ldb.CountyCityTable[r.County][r.City]; !exist {
+			ldb.CountyCityTable[r.County][r.City] = map[string]map[string]string{
 				r.Zipcode: {
 					"StateFIPS": r.StateFIPS,
 					"StateAbbr": r.StateAbbr,
@@ -226,7 +226,7 @@ func (ls *LocalDB) createCountyCityTable(records []models.Zipcode) error {
 			continue
 		}
 
-		ls.CountyCityTable[r.County][r.City][r.Zipcode] = map[string]string{
+		ldb.CountyCityTable[r.County][r.City][r.Zipcode] = map[string]string{
 			"StateFIPS": r.StateFIPS,
 			"StateAbbr": r.StateAbbr,
 			"StateName": r.State,
