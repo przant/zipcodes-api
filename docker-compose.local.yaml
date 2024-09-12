@@ -1,0 +1,9 @@
+services:
+  server:
+    build:
+      dockerfile: Dockerfile
+    expose:
+      - 20790
+    ports:
+        - 20790:20790
+    restart: always

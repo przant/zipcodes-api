@@ -19,6 +19,7 @@ services:
   server:
     build:
       dockerfile: Dockerfile
+    command: ["./zipcodes", "-d", "mysql"]
     depends_on:
       mysql-db:
         condition: service_healthy
