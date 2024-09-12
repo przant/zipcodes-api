@@ -22,9 +22,9 @@ func NewMySQLRepo() (*MySQLRepo, error) {
 	cfg := mysql.Config{
 		User:   os.Getenv("MYSQL_USER"),
 		Passwd: os.Getenv("MYSQL_PASSWORD"),
+		DBName: os.Getenv("MYSQL_DATABASE"),
 		Net:    "tcp",
 		Addr:   "mysql-db:3306",
-		DBName: "us_zipcodes",
 	}
 
 	db, err := sql.Open("mysql", cfg.FormatDSN())
