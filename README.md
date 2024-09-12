@@ -3,7 +3,7 @@
     <p align="center">A simple API to fetch the US zipcodes(2000 census) and their associated information in differet ways</p>
     <br>
     <p align="center">
-        <img src="./demos/render1726167184671.gif" alt="API server with MySQL database" width="800" height="500">
+        <img src="./demos/render1726176414147.gif" alt="API server with MySQL database" width="800" height="500">
     </p>
 </p>
 
