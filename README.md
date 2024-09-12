@@ -3,7 +3,7 @@
     <p align="center">A simple API to fetch teh US zipcodes and their associated information in differet ways</p>
     <br>
     <p align="center">
-        <img src="./demos/render1726167184671.gif" alt="API server with MySQL database">
+        <img src="./demos/render1726167184671.gif" alt="API server with MySQL database" width="800" height="500">
     </p>
 </p>
 
@@ -37,11 +37,26 @@ The default port is `:20790` and by this moment there is no automated option to 
 
 You can see how to run the API server and fetch data in the following demos:
 
-![API server with custom in memory database](./demos/render1726166927980.gif)
 
-![API server with MySQL database](./demos/render1726167184671.gif)
+<p align="center">
+    <img src="./demos/render1726166927980.gif" alt="API server with custom in memory database" width="800" height="500">
+</p>
 
-![Fetching data with the provided endpoints](./demos/render1726168725506.gif)
+<p align="center">
+    <img src="./demos/render1726167184671.gif" alt="API server with MySQL database" width="800" height="500">
+</p>
+
+<p align="center">
+    <img src="./demos/render1726168725506.gif" alt="Fetching data with the provided endpoints" width="800" height="500">
+</p>
+
+These are the `curl` examples shown in the gift demos:
+
+* `curl -i http://localhost:20790/zipcodes/90001`
+* `curl -i http://localhost:20790/counties/Sampson`
+* `curl -i http://localhost:20790/states/North%20Carolina/counties/Mecklenburg`
+* `curl -i http://localhost:20790/states/Virginia/cities/Ivor`
+* `curl -i http://localhost:20790/counties/Cook/cities/Rosemont`
 
 ## TO-DO
 
