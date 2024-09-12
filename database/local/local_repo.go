@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/przant/zipcodes-api/models"
@@ -25,8 +26,10 @@ func NewLocalDBRepo() (*LocalDBRepo, error) {
 	return lr, nil
 }
 
-func (lr *LocalDBRepo) Close() error {
-	return lr.db.Close()
+func (lr *LocalDBRepo) Close() {
+	if err := lr.db.Close(); err != nil {
+		log.Printf("while closing the LocalDBRepo: %s", err)
+	}
 }
 
 func (lr *LocalDBRepo) FetchByZipcode(zipcode string) (*models.Zipcode, error) {
