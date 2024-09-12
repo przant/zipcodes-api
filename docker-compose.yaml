@@ -6,6 +6,12 @@ services:
       - mysql.env
     expose:
       - 3306
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 --silent
+      interval: 5s
+      retries: 3
+      start_period: 0s
+      timeout: 3s
     ports:
       - 3306:3306
     restart: always
@@ -15,10 +21,9 @@ services:
       dockerfile: Dockerfile
     depends_on:
       mysql-db:
-        condition: service_started
-        required: true
+        condition: service_healthy
     expose:
       - 20790
     ports:
-        - 8080:20790
+        - 20790:20790
     restart: always
