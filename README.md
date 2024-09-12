@@ -7,12 +7,6 @@
     </p>
 </p>
 
-![API server with custom in memory database](./demos/render1726166927980.gif)
-
-![API server with MySQL database](./demos/render1726167184671.gif)
-
-![Fetching data with the provided endpoints](./demos/render1726168725506.gif)
-
 ## Description
 This API is intended to fetch the US postal codes and its associated information such as: state, state abbreviation, county, and city.
 
