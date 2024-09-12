@@ -1,6 +1,8 @@
 package repository
 
-import "github.com/przant/zipcodes-api/models"
+import (
+	"github.com/przant/zipcodes-api/models"
+)
 
 type ZipcodesRepo interface {
 	FetchByZipcode(zipcode string) (*models.Zipcode, error)
