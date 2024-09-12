@@ -1,18 +1,45 @@
 package main
 
 import (
+	"flag"
 	"log"
 
-	db "github.com/przant/zipcodes-api/database/mysql"
+	localdb "github.com/przant/zipcodes-api/database/local"
+	database "github.com/przant/zipcodes-api/database/mysql"
 	"github.com/przant/zipcodes-api/http/rest"
 	repo "github.com/przant/zipcodes-api/repository"
 )
 
-func main() {
+var (
+	service string
+)
 
-	db, err := db.NewMySQLRepo()
-	if err != nil {
-		log.Fatalf("while connecting to the db: %s", err)
+const (
+	LOCALDBSVC = "local"
+	MYSQLDBSVC = "mysql"
+)
+
+func init() {
+	flag.StringVar(&service, "database", "local", "The database name to use to store and fetch the US zipcodes")
+	flag.StringVar(&service, "d", "local", "The database name to use to store and fetch the US zipcodes(shorthand)")
+}
+
+func main() {
+	flag.Parse()
+	var db repo.ZipcodesRepo
+	var err error
+
+	switch {
+	case service == LOCALDBSVC:
+		db, err = localdb.NewLocalDBRepo()
+		if err != nil {
+			log.Fatalf("while connecting to the db: %s", err)
+		}
+	case service == MYSQLDBSVC:
+		db, err = database.NewMySQLRepo()
+		if err != nil {
+			log.Fatalf("while connecting to the db: %s", err)
+		}
 	}
 	defer db.Close()
 
