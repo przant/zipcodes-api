@@ -35,16 +35,7 @@ After the APi server is up and running, the following endpoints will be availabl
 
 The default port is `:20790` and by this moment there is no automated option to chnage it, but if you want to use another port you have to update one of the docker compose files with the port you wa to use.
 
-You can see how to run the API server and fetch data in the following demos:
-
-
-<p align="center">
-    <img src="./demos/render1726166927980.gif" alt="API server with custom in memory database" width="800" height="500">
-</p>
-
-<p align="center">
-    <img src="./demos/render1726167184671.gif" alt="API server with MySQL database" width="800" height="500">
-</p>
+You can see how to fetch data form the server in the following demo:
 
 <p align="center">
     <img src="./demos/render1726168725506.gif" alt="Fetching data with the provided endpoints" width="800" height="500">
