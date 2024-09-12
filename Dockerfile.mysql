@@ -1,5 +1,17 @@
+FROM golang:1.22.7-alpine3.20 AS fetcher
+
+RUN apk --no-cache add ca-certificates git
+
+WORKDIR /tmp/sql-data/
+
+COPY go.mod ./
+RUN go mod download
+
+COPY . ./
+RUN CGO_ENABLED=0 go build -o dafr ./cmd/data-fetcher && ./dafr
+
 FROM mysql
 
-ENV MYSQL_DATABASE=us_zipcodes
-
-COPY ./database/mysql/script.sql /docker-entrypoint-initdb.d
+COPY ./database/mysql/script.sql /docker-entrypoint-initdb.d/script01.sql
+COPY --from=fetcher /tmp/sql-data/insert.sql /docker-entrypoint-initdb.d/script02.sql
+RUN chown mysql:mysql /docker-entrypoint-initdb.d/script02.sql
