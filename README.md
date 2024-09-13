@@ -53,6 +53,7 @@ These are the `curl` examples shown in the gift demos:
 
 * [ ] Add documentation (Structuctures, Functions, Interfaces, etc)
 * [ ] Add tests
+* [ ] Normilize the datatabase
 * [ ] Automate the port to use config
 * [ ] Add MongoDB database connection
 * [ ] Add GitHub actions to automate tasks
