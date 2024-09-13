@@ -49,8 +49,9 @@ These are the `curl` examples shown in the gift demos:
 * `curl -i http://localhost:20790/states/Virginia/cities/Ivor`
 * `curl -i http://localhost:20790/counties/Cook/cities/Rosemont`
 
-## TO-DO
+### TO-DO
 
+* [ ] Add documentation (Structuctures, Functions, Interfaces, etc)
 * [ ] Add tests
 * [ ] Automate the port to use config
 * [ ] Add MongoDB database connection
