@@ -3,7 +3,7 @@
     <p align="center">A simple API to fetch the US zipcodes(2000 census) and their associated information in differet ways</p>
     <br>
     <p align="center">
-        <img src="./demos/render1726176414147.gif" alt="API server with MySQL database" width="800" height="500">
+        <img src="./demos/render1726338999898.gif" alt="API server with MySQL database" width="800" height="500">
     </p>
 </p>
 
@@ -38,7 +38,7 @@ The default port is `:20790` and by this moment there is no automated option to 
 You can see how to fetch data form the server in the following demo:
 
 <p align="center">
-    <img src="./demos/render1726168725506.gif" alt="Fetching data with the provided endpoints" width="800" height="500">
+    <img src="./demos/render1726343642493.gif" alt="Fetching data with the provided endpoints" width="800" height="500">
 </p>
 
 These are the `curl` examples shown in the gift demos:
