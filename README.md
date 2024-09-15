@@ -1,6 +1,6 @@
 <p align="center">
     <h1 align="center">US Zipcodes API</h1>
-    <p align="center">A simple API to fetch the US zipcodes(2000 census) and their associated information in differet ways</p>
+    <p align="center">An API server for fetching US zipcodes.</p>
     <br>
     <p align="center">
         <img src="./demos/render1726338999898.gif" alt="API server with MySQL database" width="800" height="500">
@@ -8,24 +8,45 @@
 </p>
 
 ## Description
-This API is intended to fetch the US postal codes and its associated information such as: state, state abbreviation, county, and city.
+A simple API to fetch the US zipcodes(2000 census) and their associated information in differet ways.
 
-The main goal for creating this project was for practicing a bit some old concepts and some new ones, and this API is not intended for commercial use, only with educational purposes.
+The goal for creating this project is for practicing, and this API is not intended for commercial use, only for educational purposes.
+
+## Dependencies
+
+To execute this API you will need to have installed the following software:
+* `Golang` version `1.22.7` or higher
+* `Docker`
+* `Docker compose`
+
+The minimum requirement will be a `Golang` version `1.22.7` or higher installed to run the API server with the build-in database.
 
 ## Usage
 
-The API server could be use running one of the docker compose files, then you will require Docker and docker compose to run the project.
+The API server can be executed using `make`or compiling the server  and executed it.
 
-By this time, the API is implemented with an in memory database which is a nested map structure, and with a MySQL database.
+### Up and running the Server with Make
+You can see the available `make` commands by executing `make help`
 
-* The `docker-compose.local.yaml` file will create the API server container with an in memory database, which is a nested map structure to hold the US Zipcodes
-* The `docker-compose.mysql.yaml` file will create a `MySQL` dabatase container and the API server container.
+To run the API server you can execute one of the following commands:
 
+* `make compose-localdb start-localdb`
+* `make compose-mysqldb start-mysqldb`
 
+For cleaning up the reources created execute `make clean`
 
-The interaction is the same, and for both approaches the pupulation of the database is automated, downloading the US zipcodes from the CSV file created by [scpike](https://github.com/scpike) in the following repository [link](https://github.com/scpike/us-state-county-zip).
+### Compiling the API server
 
-After the APi server is up and running, the following endpoints will be available:
+To compile the API server, you can execute one of the following commands:
+
+* `go build -o <binary-name> ./cmd/zipcodes`
+* `make compile`
+
+The first one is for compile and get a binary specific for you current machine, the second one is for creating binaries for different OS and architectures(arm,386, amd64) in the the local `bin/` directory.
+
+The population of the database is automated, downloading the US zipcodes from the CSV file created by [scpike](https://github.com/scpike) in the following repository [link](https://github.com/scpike/us-state-county-zip).
+
+After the APi server is up and running, the following endpoints will be available at port `:20790`:
 
 * `/zipcodes/{zipcode}`
 * `/counties/{county}`
@@ -33,15 +54,13 @@ After the APi server is up and running, the following endpoints will be availabl
 * `/states/{state}/cities/{city}`
 * `/counties/{county}/cities/{city}`
 
-The default port is `:20790` and by this moment there is no automated option to chnage it, but if you want to use another port you have to update one of the docker compose files with the port you wa to use.
-
 You can see how to fetch data form the server in the following demo:
 
 <p align="center">
     <img src="./demos/render1726343642493.gif" alt="Fetching data with the provided endpoints" width="800" height="500">
 </p>
 
-These are the `curl` examples shown in the gift demos:
+These are the `curl` examples shown in the gift demo:
 
 * `curl -i http://localhost:20790/zipcodes/90001`
 * `curl -i http://localhost:20790/counties/Sampson`
@@ -52,10 +71,10 @@ These are the `curl` examples shown in the gift demos:
 ### TO-DO
 
 * [ ] Add documentation (Structuctures, Functions, Interfaces, etc)
-* [ ] Add tests
-* [ ] Normilize the datatabase
-* [ ] Automate the port to use config
+* [ ] Add automated tests
+* [ ] Normalize the datatabase
+* [ ] Automate the port to use configuration
 * [ ] Add MongoDB database connection
 * [ ] Add GitHub actions to automate tasks
-* [ ] Deploy the app to a local Kubernetes environemnt
+* [ ] Deploy the app to a local Kubernetes environment
 * [ ] Deploy the service to a Kubernentes cloud environment
