@@ -1,0 +1,19 @@
+FROM golang:1.22.7-alpine3.20 AS fetcher
+
+RUN apk --no-cache add ca-certificates git
+
+WORKDIR /tmp/mongo-data/
+
+COPY go.mod ./
+RUN go mod download
+
+COPY . ./
+RUN CGO_ENABLED=0 go build -o dafr ./cmd/data-fetcher && ./dafr -d mongo
+
+FROM mongo
+
+ENV MONGO_INITDB_DATABASE=us_zipcodes
+
+COPY --from=fetcher /tmp/mongo-data/seed.js /docker-entrypoint-initdb.d/
+RUN chown root:root /docker-entrypoint-initdb.d/seed.js && chmod 644 /docker-entrypoint-initdb.d/seed.js
+
