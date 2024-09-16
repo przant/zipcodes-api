@@ -8,7 +8,7 @@ COPY go.mod ./
 RUN go mod download
 
 COPY . ./
-RUN CGO_ENABLED=0 go build -o dafr ./cmd/data-fetcher && ./dafr
+RUN CGO_ENABLED=0 go build -o dafr ./cmd/data-fetcher && ./dafr -d mysql
 
 FROM mysql
 
