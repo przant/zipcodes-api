@@ -26,19 +26,32 @@ compose-localdb: ## Build the app with Docker Compose
 compose-mysqldb: ## Build the app with Docker Compose to use MySQL
 	@docker compose -f docker-compose.mysql.yaml build
 
+compose-mongodb: ## Build the app with Docker Compose to use MongoDB
+	@docker compose -f docker-compose.mongo.yaml build
+
 start-localdb: ## Starts the api server with local database in Docker
 	@docker compose -f docker-compose.local.yaml up
 
 start-mysqldb: ## Starts the api server with a MySQl database in Docker
 	@docker compose -f docker-compose.mysql.yaml up
 
+start-mongodb: ## Starts the api server with a MongoDB database in Docker
+	@docker compose -f docker-compose.mongo.yaml up
+
 run: ## Runs a local compiled cmd/zipcodes api server
 	./apisrv
 
-clean: ## Removes the binaries, and services created
+clean: ## Removes the binaries, and services/containers created
 	@rm -f apisrv* 2>/dev/null
 	@cd ${PROJECTDIR}/bin/darwin/ && rm -f * 2>/dev/null
 	@cd ${PROJECTDIR}/bin/linux/  && rm -f * 2>/dev/null
 	@cd ${PROJECTDIR}/bin/windows/ && rm -f * 2>/dev/null
-	@docker compose -f docker-compose.local.yaml down
 	@docker compose -f docker-compose.mysql.yaml down
+	@docker compose -f docker-compose.mongo.yaml down
+	@docker compose -f docker-compose.local.yaml down
+	@for CONT in $(docker ps -a | grep zipcodes-api | awk '{print $1}'); do \
+		docker stop $CONT; \
+	done
+	@docker container prune -f
+	@docker volume prune
+	@docker network prune
