@@ -5,7 +5,8 @@ import (
 	"log"
 
 	localdb "github.com/przant/zipcodes-api/database/local"
-	database "github.com/przant/zipcodes-api/database/mysql"
+	mgodb "github.com/przant/zipcodes-api/database/mongo"
+	sqldb "github.com/przant/zipcodes-api/database/mysql"
 	"github.com/przant/zipcodes-api/http/rest"
 	repo "github.com/przant/zipcodes-api/repository"
 )
@@ -17,6 +18,7 @@ var (
 const (
 	LOCALDBSVC = "local"
 	MYSQLDBSVC = "mysql"
+	MONGODBSVC = "mongo"
 )
 
 func init() {
@@ -36,7 +38,12 @@ func main() {
 			log.Fatalf("while connecting to the db: %s", err)
 		}
 	case service == MYSQLDBSVC:
-		db, err = database.NewMySQLRepo()
+		db, err = sqldb.NewMySQLRepo()
+		if err != nil {
+			log.Fatalf("while connecting to the db: %s", err)
+		}
+	case service == MONGODBSVC:
+		db, err = mgodb.NewMongoRepo()
 		if err != nil {
 			log.Fatalf("while connecting to the db: %s", err)
 		}
