@@ -1,0 +1,34 @@
+services:
+  mongo-db:
+    build:
+      dockerfile: Dockerfile.mongo
+    env_file:
+      - .env
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+    expose:
+      - 27017
+    healthcheck:
+      test: |
+        echo "db.runCommand({ ping: 1}).ok;" | mongosh "mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@127.0.0.1:27017/"
+      interval: 20s
+      timeout: 10s
+      retries: 3
+    ports:
+      - 27017:27017
+    restart: always
+
+  server:
+    build:
+      dockerfile: Dockerfile
+    command: ["./zipcodes", "-d", "mongo"]
+    depends_on:
+      mongo-db:
+        condition: service_healthy
+    expose:
+      - 20790
+    ports:
+        - 20790:20790
+    restart: always
