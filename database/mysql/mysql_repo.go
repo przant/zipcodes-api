@@ -15,7 +15,7 @@ type MySQLRepo struct {
 }
 
 func NewMySQLRepo() (*MySQLRepo, error) {
-	err := godotenv.Load("mysql.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		return nil, err
 	}

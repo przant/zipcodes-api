@@ -16,7 +16,7 @@ EXPOSE 20790
 
 RUN pwd && ls
 
-COPY --from=builder /api/mysql.env /api/zipcodes ./
+COPY --from=builder /api/.env /api/zipcodes ./
 
 RUN pwd && ls
 
