@@ -12,6 +12,6 @@ RUN CGO_ENABLED=0 go build -o dafr ./cmd/data-fetcher && ./dafr -d mysql
 
 FROM mysql
 
-COPY ./database/mysql/script.sql /docker-entrypoint-initdb.d/script01.sql
-COPY --from=fetcher /tmp/sql-data/insert.sql /docker-entrypoint-initdb.d/script02.sql
-RUN chown mysql:mysql /docker-entrypoint-initdb.d/script02.sql
+COPY ./database/mysql/script.sh /docker-entrypoint-initdb.d/script01.sh
+COPY --from=fetcher /tmp/sql-data/insert.sh /docker-entrypoint-initdb.d/script02.sh
+RUN chown mysql:mysql /docker-entrypoint-initdb.d/*.sh && chmod 770 /docker-entrypoint-initdb.d/*.sh
