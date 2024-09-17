@@ -23,17 +23,42 @@ The minimum requirement will be a `Golang` version `1.22.7` or higher installed 
 
 ## Usage
 
-The API server can be executed using `make`or compiling the server  and executed it.
+The API server can be executed using `make`or compiling the server  and executed it.  
 
-### Up and running the Server with Make
-You can see the available `make` commands by executing `make help`
+To see the avalaible `make` commands you can execute `make help`
 
-To run the API server you can execute one of the following commands:
+For using `make` you have to have `make` or any compatible variant already installed on your system.
 
-* `make compose-localdb start-localdb`
-* `make compose-mysqldb start-mysqldb`
+### Running the API Server with a MySQL database
 
-For cleaning up the reources created execute `make clean`
+For running the API server with a MySQL database as the backend storage, you have to have a `.env` locally at the root of this repository and already have installed Docker and Docker compose.
+
+The `.env` file must contain the following environemtn variables:
+
+* `MYSQL_ROOT_PASSWORD`
+* `MYSQL_DATABASE`
+* `MYSQL_USER`
+* `MYSQL_DATABASE`
+* `MYSQL_PASSWORD`
+
+Then you have to run the command
+
+`make compose-mysqldb start-mysqldb` or simply `make start-mysqldb`
+
+### Running the API Server with a MongoDB database
+
+For running the API server with a MongoDB database as the backend storage, you have to have a `.env` locally at the root of this repository and already have installed Docker and Docker compose.
+
+The `.env` file must contain the following environemtn variables:
+
+* `MONGODB_USERNAME`
+* `MONGODB_PASSWORD`
+* `MONGODB_DATABASE`
+* `MONGODB_COLLECTION`
+
+Then you have to run the command
+
+`make compose-mongodb start-mongodb` or simply `make start-mongodb`
 
 ### Compiling the API server
 
@@ -42,11 +67,13 @@ To compile the API server, you can execute one of the following commands:
 * `go build -o <binary-name> ./cmd/zipcodes`
 * `make compile`
 
-The first one is for compile and get a binary specific for you current machine, the second one is for creating binaries for different OS and architectures(arm,386, amd64) in the the local `bin/` directory.
+The first one is for compile and get a binary specific for you current machine, the second one is for creating binaries for different OS and architectures(arm, 386, amd64) in the the local `bin/` directory.
+
+## Populating the database
 
 The population of the database is automated, downloading the US zipcodes from the CSV file created by [scpike](https://github.com/scpike) in the following repository [link](https://github.com/scpike/us-state-county-zip).
 
-After the APi server is up and running, the following endpoints will be available at port `:20790`:
+After the API server is up and running, the following endpoints will be available at port `:20790`:
 
 * `/zipcodes/{zipcode}`
 * `/counties/{county}`
@@ -60,7 +87,7 @@ You can see how to fetch data form the server in the following demo:
     <img src="./demos/render1726343642493.gif" alt="Fetching data with the provided endpoints" width="800" height="500">
 </p>
 
-These are the `curl` examples shown in the gift demo:
+Here are the `curl` examples shown in the gift demo:
 
 * `curl -i http://localhost:20790/zipcodes/90001`
 * `curl -i http://localhost:20790/counties/Sampson`
@@ -72,9 +99,9 @@ These are the `curl` examples shown in the gift demo:
 
 * [ ] Add documentation (Structuctures, Functions, Interfaces, etc)
 * [ ] Add automated tests
-* [ ] Normalize the datatabase
-* [ ] Automate the port to use configuration
-* [ ] Add MongoDB database connection
+* [ ] Normalize the MYSQL datatabase
+* [ ] Set up dynamically the API server port to use
+* [x] Add MongoDB database connection
 * [ ] Add GitHub actions to automate tasks
 * [ ] Deploy the app to a local Kubernetes environment
 * [ ] Deploy the service to a Kubernentes cloud environment
