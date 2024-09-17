@@ -67,17 +67,109 @@ func (mdb *MongoRepo) FetchByZipcode(zipcode string) (*models.Zipcode, error) {
 }
 
 func (mdb *MongoRepo) FetchByCounty(county string) ([]models.Zipcode, error) {
-	return nil, nil
+	ctx := context.TODO()
+
+	coll := mdb.clt.Database(os.Getenv("MONGODB_DATABASE")).Collection(os.Getenv("MONGODB_COLLECTION"))
+	cursor, err := coll.Find(ctx, bson.D{{Key: "county", Value: county}})
+	if err != nil {
+		return nil, err
+	}
+
+	results := make([]bson.M, 0)
+	if err = cursor.All(ctx, &results); err != nil {
+		return nil, err
+	}
+
+	zips := make([]models.Zipcode, 0)
+	for _, result := range results {
+		zip := models.Zipcode{}
+		err = json.NewDecoder(strings.NewReader(result.String())).Decode(&zip)
+		if err != nil {
+			return nil, err
+		}
+		zips = append(zips, zip)
+	}
+
+	return zips, nil
 }
 
 func (mdb *MongoRepo) FetchByStateCounty(state, county string) ([]models.Zipcode, error) {
-	return nil, nil
+	ctx := context.TODO()
+
+	coll := mdb.clt.Database(os.Getenv("MONGODB_DATABASE")).Collection(os.Getenv("MONGODB_COLLECTION"))
+	cursor, err := coll.Find(ctx, bson.D{{Key: "state", Value: state}, {Key: "county", Value: county}})
+	if err != nil {
+		return nil, err
+	}
+
+	results := make([]bson.M, 0)
+	if err = cursor.All(ctx, &results); err != nil {
+		return nil, err
+	}
+
+	zips := make([]models.Zipcode, 0)
+	for _, result := range results {
+		zip := models.Zipcode{}
+		err = json.NewDecoder(strings.NewReader(result.String())).Decode(&zip)
+		if err != nil {
+			return nil, err
+		}
+		zips = append(zips, zip)
+	}
+
+	return zips, nil
 }
 
 func (mdb *MongoRepo) FetchByStateCity(state, city string) ([]models.Zipcode, error) {
-	return nil, nil
+	ctx := context.TODO()
+
+	coll := mdb.clt.Database(os.Getenv("MONGODB_DATABASE")).Collection(os.Getenv("MONGODB_COLLECTION"))
+	cursor, err := coll.Find(ctx, bson.D{{Key: "state", Value: state}, {Key: "city", Value: city}})
+	if err != nil {
+		return nil, err
+	}
+
+	results := make([]bson.M, 0)
+	if err = cursor.All(ctx, &results); err != nil {
+		return nil, err
+	}
+
+	zips := make([]models.Zipcode, 0)
+	for _, result := range results {
+		zip := models.Zipcode{}
+		err = json.NewDecoder(strings.NewReader(result.String())).Decode(&zip)
+		if err != nil {
+			return nil, err
+		}
+		zips = append(zips, zip)
+	}
+
+	return zips, nil
 }
 
 func (mdb *MongoRepo) FetchByCountyCity(county, city string) ([]models.Zipcode, error) {
-	return nil, nil
+	ctx := context.TODO()
+
+	coll := mdb.clt.Database(os.Getenv("MONGODB_DATABASE")).Collection(os.Getenv("MONGODB_COLLECTION"))
+	cursor, err := coll.Find(ctx, bson.D{{Key: "county", Value: county}, {Key: "city", Value: city}})
+	if err != nil {
+		return nil, err
+	}
+
+	results := make([]bson.M, 0)
+	if err = cursor.All(ctx, &results); err != nil {
+		return nil, err
+	}
+
+	zips := make([]models.Zipcode, 0)
+	for _, result := range results {
+		zip := models.Zipcode{}
+		err = json.NewDecoder(strings.NewReader(result.String())).Decode(&zip)
+		if err != nil {
+			return nil, err
+		}
+		zips = append(zips, zip)
+	}
+
+	return zips, nil
 }
