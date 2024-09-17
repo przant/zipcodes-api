@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 
@@ -47,7 +48,8 @@ func (db *MySQLRepo) Close() {
 }
 
 func (mr *MySQLRepo) FetchByZipcode(zipcode string) (*models.Zipcode, error) {
-	rows, err := mr.db.Query("SELECT state, state_abbr, zipcode, county, city FROM zipcodes WHERE zipcode = ?", zipcode)
+	q := fmt.Sprintf("SELECT state, state_abbr, zipcode, county, city FROM %s WHERE zipcode = %s", os.Getenv("MYSQL_TABLE"), zipcode)
+	rows, err := mr.db.Query(q)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +67,8 @@ func (mr *MySQLRepo) FetchByZipcode(zipcode string) (*models.Zipcode, error) {
 }
 
 func (mr *MySQLRepo) FetchByCounty(county string) ([]models.Zipcode, error) {
-	rows, err := mr.db.Query("SELECT state, state_abbr, zipcode, county, city FROM zipcodes WHERE county = ?", county)
+	q := fmt.Sprintf("SELECT state, state_abbr, zipcode, county, city FROM %s WHERE county = %q", os.Getenv("MYSQL_TABLE"), county)
+	rows, err := mr.db.Query(q)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +89,8 @@ func (mr *MySQLRepo) FetchByCounty(county string) ([]models.Zipcode, error) {
 }
 
 func (mr *MySQLRepo) FetchByStateCounty(state, county string) ([]models.Zipcode, error) {
-	rows, err := mr.db.Query("SELECT state, state_abbr, zipcode, county, city FROM zipcodes WHERE state = ? AND county = ?", state, county)
+	q := fmt.Sprintf("SELECT state, state_abbr, zipcode, county, city FROM %s WHERE state = %q AND county = %q", os.Getenv("MYSQL_TABLE"), state, county)
+	rows, err := mr.db.Query(q)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +111,8 @@ func (mr *MySQLRepo) FetchByStateCounty(state, county string) ([]models.Zipcode,
 }
 
 func (mr *MySQLRepo) FetchByStateCity(state, city string) ([]models.Zipcode, error) {
-	rows, err := mr.db.Query("SELECT state, state_abbr, zipcode, county, city FROM zipcodes WHERE state = ? AND city = ?", state, city)
+	q := fmt.Sprintf("SELECT state, state_abbr, zipcode, county, city FROM %s WHERE state = %q AND city = %q", os.Getenv("MYSQL_TABLE"), state, city)
+	rows, err := mr.db.Query(q)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +133,8 @@ func (mr *MySQLRepo) FetchByStateCity(state, city string) ([]models.Zipcode, err
 }
 
 func (mr *MySQLRepo) FetchByCountyCity(county, city string) ([]models.Zipcode, error) {
-	rows, err := mr.db.Query("SELECT state, state_abbr, zipcode, county, city FROM zipcodes WHERE county = ? AND city = ?", county, city)
+	q := fmt.Sprintf("SELECT state, state_abbr, zipcode, county, city FROM %s WHERE county = %q AND city = %q", os.Getenv("MYSQL_TABLE"), county, city)
+	rows, err := mr.db.Query(q)
 	if err != nil {
 		return nil, err
 	}
