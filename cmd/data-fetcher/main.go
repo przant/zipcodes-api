@@ -17,7 +17,7 @@ var (
 )
 
 const (
-	INSERT_MYSQL = "USE %s;\nINSERT INTO %s(state, state_abbr, zipcode, county, city) VALUES\n"
+	INSERT_MYSQL = "USE %s;\nINSERT INTO %s(state_fips, state, state_abbr, zipcode, county, city) VALUES\n"
 	INSERT_MONGO = "const conn = new Mongo();\n\nconst db = conn.getDB(\"%s\");\n\ndb.%s.drop();\n"
 	MYSQLDB      = "mysql"
 	MONGODB      = "mongo"
@@ -59,10 +59,10 @@ func createMySQlInsert(zips []models.Zipcode) {
 	fmt.Fprintf(file, "SQL=$(cat <<-EOF\n")
 	fmt.Fprintf(file, INSERT_MYSQL, os.Getenv("MYSQL_DATABASE"), os.Getenv("MYSQL_TABLE"))
 	for _, v := range zips[1 : len(zips)-1] {
-		fmt.Fprintf(file, "(%q,%q,%q,%q,%q),\n", v.State, v.StateAbbr, v.Zipcode, v.County, v.City)
+		fmt.Fprintf(file, "(%q,%q,%q,%q,%q,%q),\n", v.StateFIPS, v.State, v.StateAbbr, v.Zipcode, v.County, v.City)
 	}
 	v := zips[len(zips)-1]
-	fmt.Fprintf(file, "(%q,%q,%q,%q,%q);\n", v.State, v.StateAbbr, v.Zipcode, v.County, v.City)
+	fmt.Fprintf(file, "(%q,%q,%q,%q,%q,%q);\n", v.StateFIPS, v.State, v.StateAbbr, v.Zipcode, v.County, v.City)
 	fmt.Fprintf(file, "EOF\n)\necho $SQL | mysql -u$MYSQL_USER -p$MYSQL_PASSWORD\n")
 }
 

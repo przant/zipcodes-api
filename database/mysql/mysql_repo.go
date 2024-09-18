@@ -48,7 +48,7 @@ func (db *MySQLRepo) Close() {
 }
 
 func (mr *MySQLRepo) FetchByZipcode(zipcode string) (*models.Zipcode, error) {
-	q := fmt.Sprintf("SELECT state, state_abbr, zipcode, county, city FROM %s WHERE zipcode = %s", os.Getenv("MYSQL_TABLE"), zipcode)
+	q := fmt.Sprintf("SELECT state_fips, state, state_abbr, zipcode, county, city FROM %s WHERE zipcode = %s", os.Getenv("MYSQL_TABLE"), zipcode)
 	rows, err := mr.db.Query(q)
 	if err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func (mr *MySQLRepo) FetchByZipcode(zipcode string) (*models.Zipcode, error) {
 
 	zip := &models.Zipcode{}
 	for rows.Next() {
-		if err := rows.Scan(&zip.State, &zip.StateAbbr, &zip.Zipcode, &zip.County, &zip.City); err != nil {
+		if err := rows.Scan(&zip.StateFIPS, &zip.State, &zip.StateAbbr, &zip.Zipcode, &zip.County, &zip.City); err != nil {
 			return nil, err
 		} else {
 			break
@@ -67,7 +67,7 @@ func (mr *MySQLRepo) FetchByZipcode(zipcode string) (*models.Zipcode, error) {
 }
 
 func (mr *MySQLRepo) FetchByCounty(county string) ([]models.Zipcode, error) {
-	q := fmt.Sprintf("SELECT state, state_abbr, zipcode, county, city FROM %s WHERE county = %q", os.Getenv("MYSQL_TABLE"), county)
+	q := fmt.Sprintf("SELECT state_fips, state, state_abbr, zipcode, county, city FROM %s WHERE county = %q", os.Getenv("MYSQL_TABLE"), county)
 	rows, err := mr.db.Query(q)
 	if err != nil {
 		return nil, err
@@ -78,7 +78,7 @@ func (mr *MySQLRepo) FetchByCounty(county string) ([]models.Zipcode, error) {
 
 	for rows.Next() {
 		zip := models.Zipcode{}
-		if err := rows.Scan(&zip.State, &zip.StateAbbr, &zip.Zipcode, &zip.County, &zip.City); err != nil {
+		if err := rows.Scan(&zip.StateFIPS, &zip.State, &zip.StateAbbr, &zip.Zipcode, &zip.County, &zip.City); err != nil {
 			return nil, err
 		} else {
 			zips = append(zips, zip)
@@ -89,7 +89,7 @@ func (mr *MySQLRepo) FetchByCounty(county string) ([]models.Zipcode, error) {
 }
 
 func (mr *MySQLRepo) FetchByStateCounty(state, county string) ([]models.Zipcode, error) {
-	q := fmt.Sprintf("SELECT state, state_abbr, zipcode, county, city FROM %s WHERE state = %q AND county = %q", os.Getenv("MYSQL_TABLE"), state, county)
+	q := fmt.Sprintf("SELECT state_fips, state, state_abbr, zipcode, county, city FROM %s WHERE state = %q AND county = %q", os.Getenv("MYSQL_TABLE"), state, county)
 	rows, err := mr.db.Query(q)
 	if err != nil {
 		return nil, err
@@ -100,7 +100,7 @@ func (mr *MySQLRepo) FetchByStateCounty(state, county string) ([]models.Zipcode,
 
 	for rows.Next() {
 		zip := models.Zipcode{}
-		if err := rows.Scan(&zip.State, &zip.StateAbbr, &zip.Zipcode, &zip.County, &zip.City); err != nil {
+		if err := rows.Scan(&zip.StateFIPS, &zip.State, &zip.StateAbbr, &zip.Zipcode, &zip.County, &zip.City); err != nil {
 			return nil, err
 		} else {
 			zips = append(zips, zip)
@@ -111,7 +111,7 @@ func (mr *MySQLRepo) FetchByStateCounty(state, county string) ([]models.Zipcode,
 }
 
 func (mr *MySQLRepo) FetchByStateCity(state, city string) ([]models.Zipcode, error) {
-	q := fmt.Sprintf("SELECT state, state_abbr, zipcode, county, city FROM %s WHERE state = %q AND city = %q", os.Getenv("MYSQL_TABLE"), state, city)
+	q := fmt.Sprintf("SELECT state_fips, state, state_abbr, zipcode, county, city FROM %s WHERE state = %q AND city = %q", os.Getenv("MYSQL_TABLE"), state, city)
 	rows, err := mr.db.Query(q)
 	if err != nil {
 		return nil, err
@@ -122,7 +122,7 @@ func (mr *MySQLRepo) FetchByStateCity(state, city string) ([]models.Zipcode, err
 
 	for rows.Next() {
 		zip := models.Zipcode{}
-		if err := rows.Scan(&zip.State, &zip.StateAbbr, &zip.Zipcode, &zip.County, &zip.City); err != nil {
+		if err := rows.Scan(&zip.StateFIPS, &zip.State, &zip.StateAbbr, &zip.Zipcode, &zip.County, &zip.City); err != nil {
 			return nil, err
 		} else {
 			zips = append(zips, zip)
@@ -133,7 +133,7 @@ func (mr *MySQLRepo) FetchByStateCity(state, city string) ([]models.Zipcode, err
 }
 
 func (mr *MySQLRepo) FetchByCountyCity(county, city string) ([]models.Zipcode, error) {
-	q := fmt.Sprintf("SELECT state, state_abbr, zipcode, county, city FROM %s WHERE county = %q AND city = %q", os.Getenv("MYSQL_TABLE"), county, city)
+	q := fmt.Sprintf("SELECT state_fips, state, state_abbr, zipcode, county, city FROM %s WHERE county = %q AND city = %q", os.Getenv("MYSQL_TABLE"), county, city)
 	rows, err := mr.db.Query(q)
 	if err != nil {
 		return nil, err
@@ -144,7 +144,7 @@ func (mr *MySQLRepo) FetchByCountyCity(county, city string) ([]models.Zipcode, e
 
 	for rows.Next() {
 		zip := models.Zipcode{}
-		if err := rows.Scan(&zip.State, &zip.StateAbbr, &zip.Zipcode, &zip.County, &zip.City); err != nil {
+		if err := rows.Scan(&zip.StateFIPS, &zip.State, &zip.StateAbbr, &zip.Zipcode, &zip.County, &zip.City); err != nil {
 			return nil, err
 		} else {
 			zips = append(zips, zip)
