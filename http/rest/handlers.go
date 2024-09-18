@@ -26,6 +26,14 @@ func GetByZipcode(c echo.Context) error {
 	return c.JSON(http.StatusOK, record)
 }
 
+// @Summary Get Zipcode Information
+// @Description get info by county
+// @ID get-info-by-county
+// @Accept json
+// @Produce json
+// @Param county path string true "County name"
+// @Success 200 {array} models.Zipcode
+// @Router /counties/{county} [get]
 func GetByCounty(c echo.Context) error {
 	co := c.Param("county")
 	db := repo.GetZipcodesService()
@@ -37,6 +45,15 @@ func GetByCounty(c echo.Context) error {
 	return c.JSON(http.StatusOK, records)
 }
 
+// @Summary Get Zipcode Information
+// @Description get info by state and county
+// @ID get-info-by-state-county
+// @Accept json
+// @Produce json
+// @Param state path string true "State name"
+// @Param county path string true "County name"
+// @Success 200 {array} models.Zipcode
+// @Router /states/{state}/counties/{county} [get]
 func GetByStateCounty(c echo.Context) error {
 	st := c.Param("state")
 	co := c.Param("county")
@@ -49,6 +66,15 @@ func GetByStateCounty(c echo.Context) error {
 	return c.JSON(http.StatusOK, records)
 }
 
+// @Summary Get Zipcode Information
+// @Description get info by state and city
+// @ID get-info-by-state-city
+// @Accept json
+// @Produce json
+// @Param state path string true "State name"
+// @Param city path string true "City name"
+// @Success 200 {array} models.Zipcode
+// @Router /states/{state}/cities/{city} [get]
 func GetByStateCity(c echo.Context) error {
 	st := c.Param("state")
 	city := c.Param("city")
@@ -61,6 +87,15 @@ func GetByStateCity(c echo.Context) error {
 	return c.JSON(http.StatusOK, records)
 }
 
+// @Summary Get Zipcode Information
+// @Description get info by county and city
+// @ID get-info-by-county-city
+// @Accept json
+// @Produce json
+// @Param county path string true "County name"
+// @Param city path string true "City name"
+// @Success 200 {array} models.Zipcode
+// @Router /counties/{county}/cities/{city} [get]
 func GetByCountyCity(c echo.Context) error {
 	co := c.Param("county")
 	city := c.Param("city")
