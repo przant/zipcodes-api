@@ -1,0 +1,67 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Simple API for fetching US zipcodes and their related\ninformation like state, county, city,  and son on",
+        "title": "Swagger Zipcodes API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:20790",
+    "paths": {
+        "/zipcodes/{zipcode}": {
+            "get": {
+                "description": "get info by zipcode",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Zipcode Information",
+                "operationId": "get-info-by-zipcode",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Zipcode value",
+                        "name": "zipcode",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Zipcode"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Zipcode": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "county": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "state_abbr": {
+                    "type": "string"
+                },
+                "state_fips": {
+                    "type": "string"
+                },
+                "zipcode": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

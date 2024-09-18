@@ -1,0 +1,46 @@
+definitions:
+  models.Zipcode:
+    properties:
+      city:
+        type: string
+      county:
+        type: string
+      state:
+        type: string
+      state_abbr:
+        type: string
+      state_fips:
+        type: string
+      zipcode:
+        type: string
+    type: object
+host: localhost:20790
+info:
+  contact: {}
+  description: |-
+    Simple API for fetching US zipcodes and their related
+    information like state, county, city,  and son on
+  title: Swagger Zipcodes API
+  version: "1.0"
+paths:
+  /zipcodes/{zipcode}:
+    get:
+      consumes:
+      - application/json
+      description: get info by zipcode
+      operationId: get-info-by-zipcode
+      parameters:
+      - description: Zipcode value
+        in: path
+        name: zipcode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Zipcode'
+      summary: Get Zipcode Information
+swagger: "2.0"
