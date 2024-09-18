@@ -23,6 +23,109 @@ info:
   title: Swagger Zipcodes API
   version: "1.0"
 paths:
+  /counties/{county}:
+    get:
+      consumes:
+      - application/json
+      description: get info by county
+      operationId: get-info-by-county
+      parameters:
+      - description: County name
+        in: path
+        name: county
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Zipcode'
+            type: array
+      summary: Get Zipcode Information
+  /counties/{county}/cities/{city}:
+    get:
+      consumes:
+      - application/json
+      description: get info by county and city
+      operationId: get-info-by-county-city
+      parameters:
+      - description: County name
+        in: path
+        name: county
+        required: true
+        type: string
+      - description: City name
+        in: path
+        name: city
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Zipcode'
+            type: array
+      summary: Get Zipcode Information
+  /states/{state}/cities/{city}:
+    get:
+      consumes:
+      - application/json
+      description: get info by state and city
+      operationId: get-info-by-state-city
+      parameters:
+      - description: State name
+        in: path
+        name: state
+        required: true
+        type: string
+      - description: City name
+        in: path
+        name: city
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Zipcode'
+            type: array
+      summary: Get Zipcode Information
+  /states/{state}/counties/{county}:
+    get:
+      consumes:
+      - application/json
+      description: get info by state and county
+      operationId: get-info-by-state-county
+      parameters:
+      - description: State name
+        in: path
+        name: state
+        required: true
+        type: string
+      - description: County name
+        in: path
+        name: county
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Zipcode'
+            type: array
+      summary: Get Zipcode Information
   /zipcodes/{zipcode}:
     get:
       consumes:

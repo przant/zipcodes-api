@@ -8,6 +8,159 @@
     },
     "host": "localhost:20790",
     "paths": {
+        "/counties/{county}": {
+            "get": {
+                "description": "get info by county",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Zipcode Information",
+                "operationId": "get-info-by-county",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "County name",
+                        "name": "county",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Zipcode"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/counties/{county}/cities/{city}": {
+            "get": {
+                "description": "get info by county and city",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Zipcode Information",
+                "operationId": "get-info-by-county-city",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "County name",
+                        "name": "county",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "City name",
+                        "name": "city",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Zipcode"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/states/{state}/cities/{city}": {
+            "get": {
+                "description": "get info by state and city",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Zipcode Information",
+                "operationId": "get-info-by-state-city",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "State name",
+                        "name": "state",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "City name",
+                        "name": "city",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Zipcode"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/states/{state}/counties/{county}": {
+            "get": {
+                "description": "get info by state and county",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Zipcode Information",
+                "operationId": "get-info-by-state-county",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "State name",
+                        "name": "state",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "County name",
+                        "name": "county",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Zipcode"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/zipcodes/{zipcode}": {
             "get": {
                 "description": "get info by zipcode",
