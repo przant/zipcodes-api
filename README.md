@@ -69,6 +69,14 @@ To compile the API server, you can execute one of the following commands:
 
 The first one is for compile and get a binary specific for you current machine, the second one is for creating binaries for different OS and architectures(arm, 386, amd64) in the the local `bin/` directory.
 
+## Testing the API Server
+
+You could compile and run the server or use Docker to create the service in any of the different ways, then when the API server is up and running you can visit the endpoint `/swagger/index.html` to check the online Swagger documentation and test some values in the different endpoints.
+
+<p align="center">
+    <img src="./demos/swagger-doc.png" width="800" height="500">
+</p>
+
 ## Populating the database
 
 The population of the database is automated, downloading the US zipcodes from the CSV file created by [scpike](https://github.com/scpike) in the following repository [link](https://github.com/scpike/us-state-county-zip).
@@ -95,13 +103,15 @@ Here are the `curl` examples shown in the gift demo:
 * `curl -i http://localhost:20790/states/Virginia/cities/Ivor`
 * `curl -i http://localhost:20790/counties/Cook/cities/Rosemont`
 
+
 ### TO-DO
 
-* [ ] Add documentation (Structuctures, Functions, Interfaces, etc)
+* [x] Add Swagger API documentation
+* [ ] Add code documentation (Structuctures, Functions, Interfaces, etc)
 * [ ] Add automated tests
 * [ ] Normalize the MYSQL datatabase
 * [ ] Set up dynamically the API server port to use
 * [x] Add MongoDB database connection
-* [ ] Add GitHub actions to automate tasks
+* [ ] Add some GitHub actions to automate tasks
 * [ ] Deploy the app to a local Kubernetes environment
 * [ ] Deploy the service to a Kubernentes cloud environment
