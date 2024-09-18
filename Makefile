@@ -8,6 +8,7 @@ build: ## Compiles the cmd/zipcodes api server locally
 	CGO_ENABLED=0 go build -o apisrv ./cmd/zipcodes
 
 compile: ## Compile the api server for macos, linux, and windows in different archs
+	go install github.com/swaggo/swag/cmd/swag@latest && swag init -d cmd/zipcodes,http/rest,models/
 	GOOS=darwin  GOARCH=arm64 go build -o ./bin/darwin/apisrv-darwin-arm64  ./cmd/zipcodes
 	GOOS=darwin  GOARCH=amd64 go build -o ./bin/darwin/apisrv-darwin-amd64  ./cmd/zipcodes
 	GOOS=linux   GOARCH=arm   go build -o ./bin/linux/apisrv-linux-arm      ./cmd/zipcodes
@@ -21,12 +22,15 @@ compile: ## Compile the api server for macos, linux, and windows in different ar
 
 
 compose-localdb: ## Build the app with Docker Compose
+	go install github.com/swaggo/swag/cmd/swag@latest && swag init -d cmd/zipcodes,http/rest,models/
 	@docker compose -f docker-compose.local.yaml build
 
 compose-mysqldb: ## Build the app with Docker Compose to use MySQL
+	go install github.com/swaggo/swag/cmd/swag@latest && swag init -d cmd/zipcodes,http/rest,models/
 	@docker compose -f docker-compose.mysql.yaml build
 
 compose-mongodb: ## Build the app with Docker Compose to use MongoDB
+	go install github.com/swaggo/swag/cmd/swag@latest && swag init -d cmd/zipcodes,http/rest,models/
 	@docker compose -f docker-compose.mongo.yaml build
 
 start-localdb: ## Starts the api server with local database in Docker
