@@ -7,6 +7,14 @@ import (
 	repo "github.com/przant/zipcodes-api/repository"
 )
 
+// @Summary Get Zipcode Information
+// @Description get info by zipcode
+// @ID get-info-by-zipcode
+// @Accept json
+// @Produce json
+// @Param zipcode path string true "Zipcode value"
+// @Success 200 {object} models.Zipcode
+// @Router /zipcodes/{zipcode} [get]
 func GetByZipcode(c echo.Context) error {
 	zc := c.Param("zipcode")
 	db := repo.GetZipcodesService()

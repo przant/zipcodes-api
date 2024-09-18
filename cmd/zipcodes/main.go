@@ -9,6 +9,9 @@ import (
 	sqldb "github.com/przant/zipcodes-api/database/mysql"
 	"github.com/przant/zipcodes-api/http/rest"
 	repo "github.com/przant/zipcodes-api/repository"
+	echoSwagger "github.com/swaggo/echo-swagger"
+
+	_ "github.com/przant/zipcodes-api/docs"
 )
 
 var (
@@ -26,6 +29,12 @@ func init() {
 	flag.StringVar(&service, "d", "local", "The database name to use to store and fetch the US zipcodes(shorthand)")
 }
 
+// @title Swagger Zipcodes API
+// @version 1.0
+// @description Simple API for fetching US zipcodes and their related
+// @description information like state, county, city,  and son on
+// @host localhost:20790
+// BasePath /
 func main() {
 	flag.Parse()
 	var db repo.ZipcodesRepo
@@ -58,6 +67,7 @@ func main() {
 	api.GET("/states/:state/counties/:county", rest.GetByStateCounty)
 	api.GET("/states/:state/cities/:city", rest.GetByStateCity)
 	api.GET("/counties/:county/cities/:city", rest.GetByCountyCity)
+	api.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	api.Logger.Fatal(api.Start(rest.PORT))
 }
