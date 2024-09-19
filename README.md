@@ -3,7 +3,7 @@
     <p align="center">An API server for fetching US zipcodes.</p>
     <br>
     <p align="center">
-        <img src="./demos/api_and_mysql.gif.gif" alt="API server with MySQL database" width="800" height="500">
+        <img src="./demos/api_and_mysql.gif" alt="API server with MySQL database" width="800" height="500">
     </p>
 </p>
 
