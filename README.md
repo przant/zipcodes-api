@@ -3,7 +3,7 @@
     <p align="center">An API server for fetching US zipcodes.</p>
     <br>
     <p align="center">
-        <img src="./demos/render1726338999898.gif" alt="API server with MySQL database" width="800" height="500">
+        <img src="./demos/api_and_mysql.gif.gif" alt="API server with MySQL database" width="800" height="500">
     </p>
 </p>
 
@@ -92,7 +92,7 @@ After the API server is up and running, the following endpoints will be availabl
 You can see how to fetch data form the server in the following demo:
 
 <p align="center">
-    <img src="./demos/render1726343642493.gif" alt="Fetching data with the provided endpoints" width="800" height="500">
+    <img src="./demos/fetching_data.gif" alt="Fetching data with the provided endpoints" width="800" height="500">
 </p>
 
 Here are the `curl` examples shown in the gift demo:
