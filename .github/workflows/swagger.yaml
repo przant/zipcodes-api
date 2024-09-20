@@ -37,3 +37,34 @@ jobs:
           fi
 
           exit 0
+
+  swagger-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Get Golang version
+        run: |
+          echo "Listing current dir" && ls
+          VERSION=$(cat go.mod | grep "go 1." | cut -d' ' -f2 | tr -d ' ''')
+          echo "GOLANG_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Setup Golang
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GOLANG_VERSION }}
+
+      - name: Validate files
+        run: |
+          go install github.com/go-swagger/go-swagger/cmd/swagger@"${SWAGGER_VERSION:-latest}"
+
+          JSON_FILE=$(swagger validate docs/swagger.json)
+          YAML_FILE=$(swagger validate docs/swagger.yaml)
+          
+          if [ ! "$JSON" =~ "is valid" -o ! "$JSON" =~ "is valid" ]; then
+            echo "error::The swagger specification files are not valid!"
+            exit 1
+          fi
+
+          exit 0
