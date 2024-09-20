@@ -1,7 +1,8 @@
 services:
   mysql-db:
     build:
-      dockerfile: Dockerfile.mysql
+      context: ./
+      dockerfile: dockerfiles/Dockerfile.mysql
     env_file:
       - .env
     expose:
@@ -18,7 +19,8 @@ services:
 
   server:
     build:
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: dockerfiles/Dockerfile
     command: ["./zipcodes", "-d", "mysql"]
     depends_on:
       mysql-db:

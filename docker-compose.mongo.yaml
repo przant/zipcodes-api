@@ -1,7 +1,8 @@
 services:
   mongo-db:
     build:
-      dockerfile: Dockerfile.mongo
+      context: ./
+      dockerfile: dockerfiles/Dockerfile.mongo
     env_file:
       - .env
     environment:
@@ -22,7 +23,8 @@ services:
 
   server:
     build:
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: dockerfiles/Dockerfile
     command: ["./zipcodes", "-d", "mongo"]
     depends_on:
       mongo-db:

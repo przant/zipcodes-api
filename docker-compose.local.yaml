@@ -1,7 +1,8 @@
 services:
   server:
     build:
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: dockerfiles/Dockerfile
     expose:
       - 20790
     ports:
