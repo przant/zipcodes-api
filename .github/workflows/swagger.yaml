@@ -1,7 +1,8 @@
 name: Swagger checks
 
 on:
-  push
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   check-updates:
@@ -36,4 +37,3 @@ jobs:
           fi
 
           exit 0
-      
