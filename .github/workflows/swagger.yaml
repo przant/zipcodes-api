@@ -59,13 +59,7 @@ jobs:
         run: |
           go install github.com/go-swagger/go-swagger/cmd/swagger@"${SWAGGER_VERSION:-latest}"
 
-          JSON_FILE=$(swagger validate docs/swagger.json)
-          YAML_FILE=$(swagger validate docs/swagger.yaml)
-          
-          if [[ "$JSON_FILE" =~ "is valid" ]] && [[ "$YAML_FILE" =~ "is valid" ]]; then
-            echo "error::The swagger specification files are not valid!"
-            exit 1
-          fi
+          swagger validate docs/swagger.json && swagger validate docs/swagger.yaml
 
-          echo "success::The Swagger specification files are valid!"
+          echo "The Swagger specification files are valid!"
           exit 0
