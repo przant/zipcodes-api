@@ -62,9 +62,10 @@ jobs:
           JSON_FILE=$(swagger validate docs/swagger.json)
           YAML_FILE=$(swagger validate docs/swagger.yaml)
           
-          if [ ! "$JSON" =~ "is valid" -o ! "$JSON" =~ "is valid" ]; then
+          if [[ "$JSON_FILE" =~ "is valid" ]] && [[ "$YAML_FILE" =~ "is valid" ]]; then
             echo "error::The swagger specification files are not valid!"
             exit 1
           fi
 
+          echo "success::The Swagger specification files are valid!"
           exit 0
