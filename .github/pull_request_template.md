@@ -34,7 +34,7 @@ List of detailed potential problems(optional)
 *
 *
 
-## 🧪 Test already done and in queue
+## 🧪 Test already done or in progress
 
 * []
 * []
