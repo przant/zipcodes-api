@@ -1,0 +1,65 @@
+name: Swagger checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  check-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get Golang version
+        run: |
+          echo "Listing current dir" && ls
+          VERSION=$(cat go.mod | grep "go 1." | cut -d' ' -f2 | tr -d ' ''')
+          echo "GOLANG_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Setup Golang
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GOLANG_VERSION }}
+
+      - name: Check Swagger docs
+        run: |
+          go install github.com/swaggo/swag/cmd/swag@latest
+          swag init -d cmd/zipcodes/,http/rest,models/
+
+          SUMMARY=$(git diff --numstat ${DOCS_DIR_PATH:-./docs})
+          DIFFERENCES=$(git diff --color ${DOCS_DIR_PATH:-./docs})
+
+          if [ ! -z  "$SUMMARY" ]; then
+              echo "error::There are some swagger updates not committed yet"
+              echo "$DIFFERENCES"
+              exit 1
+          fi
+
+          exit 0
+
+  swagger-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Get Golang version
+        run: |
+          echo "Listing current dir" && ls
+          VERSION=$(cat go.mod | grep "go 1." | cut -d' ' -f2 | tr -d ' ''')
+          echo "GOLANG_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Setup Golang
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GOLANG_VERSION }}
+
+      - name: Validate files
+        run: |
+          go install github.com/go-swagger/go-swagger/cmd/swagger@"${SWAGGER_VERSION:-latest}"
+
+          swagger validate docs/swagger.json && swagger validate docs/swagger.yaml
+
+          echo "The Swagger specification files are valid!"
+          exit 0
